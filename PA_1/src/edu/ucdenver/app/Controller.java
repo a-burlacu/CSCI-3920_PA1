@@ -51,6 +51,8 @@ public class Controller {
     public TextField txtSetMatchScore1;
     public TextField txtSetMatchScore2;
     public ComboBox selSetMatchScoreDate;
+    public Button btnLoadFromFile;
+    public Button btnSaveToFile;
     public Button btnExitAdminApp;
 
     //---------------------------------------
@@ -335,6 +337,25 @@ public class Controller {
                 break;
         }
     }
+    public void loadFromFile(ActionEvent actionEvent) {
+    }
+    public void saveToFile(ActionEvent actionEvent) {
+        String cmd = String.format("%s|%s", "1", "tournament.ser");
+        String response = sendCommand(cmd);
+        String[] respArgs = response.split("\\|");
+        Alert alert;
+
+        switch (respArgs[0]) {
+            case "OK":
+                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                alert.show();
+                break;
+            case "ERR":
+                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
+                alert.show();
+                break;
+        }
+    }
     public void exitAdminApp(ActionEvent actionEvent) {
         Stage stage = (Stage) this.btnExitAdminApp.getScene().getWindow();
         stage.close();
@@ -347,9 +368,24 @@ public class Controller {
     public void listUpcomingMatches(Event event) {
         if(this.tabUpcomingMatches.isSelected()){
             String cmd = String.format("%s|","1");
+            String response = sendCommand(cmd);
             List<String> test = new ArrayList<>();
             test.add("test");
             this.lstUpcomingMatches.setItems(FXCollections.observableArrayList(test));
+
+            String[] respArgs = response.split("\\|");
+            Alert alert;
+
+            switch (respArgs[0]) {
+                case "OK":
+                    alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                    alert.show();
+                    break;
+                case "ERR":
+                    alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
+                    alert.show();
+                    break;
+            }
         }
     }
 
@@ -357,32 +393,76 @@ public class Controller {
         this.selMatchByDate.setItems(FXCollections.observableArrayList(this.matches));
         String matchDate = selMatchByDate.getValue().toString();
         String cmd = String.format("%s|%s","2", matchDate);
+        String response = sendCommand(cmd);
         List<String> test = new ArrayList<>();
         test.add("test");
         this.lstMatchesByDate.setItems(FXCollections.observableArrayList(test));
+
+        String[] respArgs = response.split("\\|");
+        Alert alert;
+
+        switch (respArgs[0]) {
+            case "OK":
+                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                alert.show();
+                break;
+            case "ERR":
+                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
+                alert.show();
+                break;
+        }
     }
 
     public void listMatchesByTeam(ActionEvent actionEvent) {
         this.selMatchesByTeam.setItems(FXCollections.observableArrayList(this.teams));
         String matchTeam = selMatchesByTeam.getValue().toString();
         String cmd = String.format("%s|%s","3", matchTeam);
+        String response = sendCommand(cmd);
         List<String> test = new ArrayList<>();
         test.add("test");
         this.lstMatchesByTeam.setItems(FXCollections.observableArrayList(test));
+
+        String[] respArgs = response.split("\\|");
+        Alert alert;
+
+        switch (respArgs[0]) {
+            case "OK":
+                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                alert.show();
+                break;
+            case "ERR":
+                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
+                alert.show();
+                break;
+        }
     }
 
     public void listLineUpsByMatch(ActionEvent actionEvent) {
         this.selLineUpsByMatch.setItems(FXCollections.observableArrayList(this.matches));
         String matchDate = selLineUpsByMatch.getValue().toString();
         String cmd = String.format("%s|%s", "3", matchDate);
+        String response = sendCommand(cmd);
         List<String> test = new ArrayList<>();
         test.add("test");
         this.lstLineUpsByMatch.setItems(FXCollections.observableArrayList(test));
+
+        String[] respArgs = response.split("\\|");
+        Alert alert;
+
+        switch (respArgs[0]) {
+            case "OK":
+                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                alert.show();
+                break;
+            case "ERR":
+                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
+                alert.show();
+                break;
+        }
     }
 
     public void exitUserApp(ActionEvent actionEvent) {
         Stage stage = (Stage) this.btnExitUserApp.getScene().getWindow();
         stage.close();
     }
-
 }
