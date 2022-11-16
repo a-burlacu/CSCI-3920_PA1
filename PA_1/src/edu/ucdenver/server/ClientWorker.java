@@ -115,7 +115,7 @@ public class ClientWorker implements Runnable {
             switch(this.clientType) {
                 case "A", "a", "ADMIN", "Admin", "admin":
                     switch (arglist[0]) {
-                        case "0":       // load from file
+                        case "0":       // TEST CASE
                             System.out.println("selected case 0");
                             response = "OK";
                             break;
