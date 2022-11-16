@@ -11,7 +11,7 @@ public class AdminApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AdminApp.class.getResource("admin-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 720, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 920, 480);
         stage.setTitle("2022 World Cup Client - Admin");
         stage.setScene(scene);
         stage.show();

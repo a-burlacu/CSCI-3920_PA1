@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server implements Runnable{
+public class Server {
 
     private final int port;
     private final int backlog; // how many clients can wait until they get connected
@@ -17,23 +17,33 @@ public class Server implements Runnable{
 
     private ServerSocket serverSocket;
 
-    private Tournament tournament;
+    //private Tournament tournament;
 
 
     //--------------------------------------------------
     //                  constructors
     //--------------------------------------------------
-    public Server(int port, int backlog, String clientType, Tournament tournament) {
+//    public Server(int port, int backlog, String clientType, Tournament tournament) {
+//        this.port = port;
+//        this.backlog = backlog;
+//        this.connectionCounter = 0;
+//        this.clientType = clientType;
+//        this.tournament = tournament;
+//
+//    }
+    public Server(int port, int backlog, String clientType) {
         this.port = port;
         this.backlog = backlog;
         this.connectionCounter = 0;
         this.clientType = clientType;
-        this.tournament = tournament;
 
     }
     public Server() {
-        this(9888, 10, "ADMIN", new Tournament(null, null, null));
+        this(9888, 10, "ADMIN");
     }
+//    public Server() {
+//        this(9888, 10, "ADMIN", new Tournament(null, null, null));
+//    }
 
 
     //--------------------------------------------------
@@ -56,55 +66,48 @@ public class Server implements Runnable{
     //--------------------------------------------------
     //                  run server
     //--------------------------------------------------
-    public void run() {
+    public void runServer() {
 
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         try {
             this.serverSocket = new ServerSocket(this.port, this.backlog);
 
-            System.out.println("STATUS MSG: serverSocket created");
+            System.out.println("STATUS MSG: 'serverSocket created'");
 
-            /*
-            Add command line menu options here?
-
-             System.out.println("Enter 1 to load Catalog from file named: StoreFile.ser.");
-            Scanner sc = new Scanner(System.in);
-            int option = sc.nextInt();
-            if (option == 1){
-                this.store = Store.loadFromFile();
-                System.out.println("Successfully loaded Store from: StoreFile.ser.");
-            }
-             */
 
             while (true) {
 
-                Socket clientConnection = null;
-                System.out.println("[SERVER] WAITING FOR CLIENT CONNECTION.");
+                Socket clientConnection = waitForClientConnection();
+                System.out.println("[SERVER] Waiting for client connection...");
                 try {
                     clientConnection = this.serverSocket.accept();
-                    System.out.println("[SERVER] ACCEPTED CLIENT CONNECTION.");
+                    System.out.println("[SERVER] Client connection accepted.");
 
                 }
                 catch (IOException ioe) {
-                    System.out.println("[SERVER] ERROR ACCEPTING CLIENT CONNECTION.");
+                    System.out.println("[SERVER] Error accepting client connection.");
                     ioe.printStackTrace();
                 }
                 finally {
                     try {
                         // Create new thread that executes the client connection
 
-                        ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
-
+                        //ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
+                        ClientWorker cw = new ClientWorker(clientConnection, this.clientType, this.connectionCounter);
+                        System.out.println("STATUS MSG: 'ClientWorker object created'");
                         executorService.execute(cw);
+
+                        System.out.println("STATUS MSG: 'New client thread initialized'");
+
                     } catch (Exception e) {
-                        System.err.println("[SERVER] ERROR THE THREAD COULD NOT BE OPENED FOR CLIENT.");
+                        System.err.println("[SERVER] Error creating thread for client.");
                         e.printStackTrace();
                     }
                 }
             }
         } catch (IOException ioe) {
-            System.out.println("\n++++++ Cannot open the server ++++++\n");
+            System.out.println("[SERVER] Error opening server.");
             executorService.shutdown();
 
             ioe.printStackTrace();
@@ -125,7 +128,7 @@ public class Server implements Runnable{
     //--------------------------------------------------
     public void stop() {
 
-        System.out.println("Terminating connection...");
+        System.out.println("[SERVER] Terminating server connection...");
         try {
             this.serverSocket.close();
 

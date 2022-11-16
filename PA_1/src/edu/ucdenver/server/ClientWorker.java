@@ -22,15 +22,21 @@ public class ClientWorker implements Runnable {
     //--------------------------------------------------
     //                  constructors
     //--------------------------------------------------
-    public ClientWorker(Socket connection,Tournament tournament, String clientType, int id){
+//    public ClientWorker(Socket connection,Tournament tournament, String clientType, int id){
+//
+//        this.clientConnection = connection;
+//        this.tournament = tournament;
+//        this.clientType = clientType;
+//        this.id = id;
+//        this.keepRunningClient = true;
+//    }
+    public ClientWorker(Socket connection, String clientType, int id){
 
         this.clientConnection = connection;
-        this.tournament = tournament;
         this.clientType = clientType;
         this.id = id;
         this.keepRunningClient = true;
     }
-
 
     //--------------------------------------------------
     //                  send message
@@ -112,6 +118,7 @@ public class ClientWorker implements Runnable {
 
                         case "1":       // load from file
                             Tournament.loadFromFile(arglist[1]);
+                            System.out.println("selected case 1");
                             response = "OK";
                             break;
 
