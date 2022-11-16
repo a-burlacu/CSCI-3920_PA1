@@ -59,6 +59,7 @@ public class ServerApplication {
                     try {
                         Tournament.loadFromFile("tournament.ser");
                         server = new Server(9888, 10, type, tournament);
+                        System.out.println("Loaded previous state.");
                     } catch (Exception e) {
                         System.err.print(e);
                     }
@@ -67,7 +68,13 @@ public class ServerApplication {
                 //            [3] save current state
                 //--------------------------------------------------
                 case "3":
-                    tournament.saveToFile("tournament.ser");
+                    try {
+                        tournament.saveToFile("tournament.ser");
+                        System.out.println("Saved current state.");
+                    }
+                    catch (Exception e){
+                        System.err.print(e);
+                    }
             }
         }
         catch (IllegalArgumentException iae) {
