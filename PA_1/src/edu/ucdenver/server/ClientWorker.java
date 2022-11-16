@@ -102,8 +102,8 @@ public class ClientWorker implements Runnable {
             //TODO: Set up clientType permissions to allow certain functions
          */
 
-        String[] arglist = new String[0];  // create empty list of strings for now
-        String response = null; // The response to the server
+        String[] arglist = clientMessage.split("\\|"); // this splits the string using | as delimiter
+        String response = ""; // This will be the response to the server
 
         try {
             switch(this.clientType) {
