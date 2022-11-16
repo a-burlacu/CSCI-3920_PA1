@@ -67,44 +67,45 @@ public class Server {
     //                  run server
     //--------------------------------------------------
     public void runServer() {
-
         ExecutorService executorService = Executors.newCachedThreadPool();
-
         try {
             this.serverSocket = new ServerSocket(this.port, this.backlog);
-
             System.out.println("\n<status message: server socket created>\n");
-
 
             while (true) {
 
-                Socket clientConnection = waitForClientConnection();
-                System.out.println("[SERVER] Waiting for client connection...");
                 try {
-                    clientConnection = this.serverSocket.accept();
-                    System.out.println("[SERVER] Client connection accepted.");
+                    Socket clientConnection = this.waitForClientConnection();
+                    System.out.println("[SERVER] Waiting for client connection...");
+
+                    ClientWorker cw = new ClientWorker(clientConnection, clientType, connectionCounter);
+                    System.out.println("<status message: ClientWorker object created>\n");
+                    executorService.execute(cw);
+                    System.out.println("<status message: new client thread initialized>\n");
+
+//                    clientConnection = this.serverSocket.accept();
+//                    System.out.println("[SERVER] Client connection accepted.");
 
                 }
                 catch (IOException ioe) {
                     System.out.println("[SERVER] Error accepting client connection.");
                     ioe.printStackTrace();
                 }
-                finally {
-                    try {
-                        // Create new thread that executes the client connection
-
-                        //ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
-                        ClientWorker cw = new ClientWorker(clientConnection, clientType, connectionCounter);
-                        System.out.println("<status message: ClientWorker object created>\n");
-                        executorService.execute(cw);
-
-                        System.out.println("<status message: new client thread initialized>\n");
-
-                    } catch (Exception e) {
-                        System.err.println("[SERVER] Error creating thread for client.");
-                        e.printStackTrace();
-                    }
-                }
+//                finally {
+//                    try {
+//                        // Create new thread that executes the client connection
+//
+//                        //ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
+//                        ClientWorker cw = new ClientWorker(clientConnection, clientType, connectionCounter);
+//                        System.out.println("<status message: ClientWorker object created>\n");
+//                        executorService.execute(cw);
+//                        System.out.println("<status message: new client thread initialized>\n");
+//
+//                    } catch (Exception e) {
+//                        System.err.println("[SERVER] Error creating thread for client.");
+//                        e.printStackTrace();
+//                    }
+//                }
             }
         } catch (IOException ioe) {
             System.out.println("[SERVER] Error opening server.");

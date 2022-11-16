@@ -64,7 +64,7 @@ public class ServerApplication {
                                     server.runServer();
 
                                     // this calls the AdminApp start method
-                                    launch(AdminApp.class, args);
+//                                    launch(AdminApp.class, args);
 
 
                                 } catch (Exception e) {

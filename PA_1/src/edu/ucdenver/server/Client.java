@@ -42,7 +42,7 @@ public class Client {
 
 
     public void connect() {
-        System.out.println("STATUS MSG: connected to client");
+        System.out.println("<status message: connected to client>\n");
         displayMessage("Attempting connection to server....");
         try {
             this.serverConnection = new Socket(this.serverIP, this.serverPort);
@@ -90,15 +90,15 @@ public class Client {
 
     public String sendRequest(String request) throws IOException { // Send message and returns the server response
         this.output.println(request);
-        displayMessage("CLIENT << " + request);
+        displayMessage("CLIENT REQUEST >>" + request);
         String srvResponse = this.input.readLine();
-        displayMessage("SERVER >> " + srvResponse);
+        displayMessage("SERVER RESPONSE >> " + srvResponse);
 
         return srvResponse;
     }
 
     private void displayMessage(String message) { // We can improve this method to be log-type one
-        System.out.println("[CLI]"+ message);
+        System.out.println("[CLIENT] "+ message);
     }
 }
 

@@ -115,7 +115,10 @@ public class ClientWorker implements Runnable {
             switch(this.clientType) {
                 case "A", "a", "ADMIN", "Admin", "admin":
                     switch (arglist[0]) {
-
+                        case "0":       // load from file
+                            System.out.println("selected case 0");
+                            response = "OK";
+                            break;
                         case "1":       // load from file
                             Tournament.loadFromFile(arglist[1]);
                             System.out.println("selected case 1");
@@ -240,7 +243,7 @@ public class ClientWorker implements Runnable {
     //--------------------------------------------------
     @Override
     public void run() {
-        System.out.println("STATUS MSG: you've reached run() in ClientWorker");
+        System.out.println("<status message: running ClientWorker...\n");
         BufferedReader input;
         PrintWriter output;
         String newMessage;

@@ -72,11 +72,13 @@ public class Controller {
     public Button btnExitUserApp;
     Client client;
 
+
     private List<String> countries;
     private List<String> teams;
     private List<String> referees;
     private List<LocalDate> matches;
     private List<String> players;
+
 
     public Controller() {
         client = new Client();
@@ -121,6 +123,50 @@ public class Controller {
         }
         return response;
     }
+
+    //----------------------------TESTING------------------------------------
+    public TextArea txtOutput;
+    public TextField txtTestCmd;
+    public Button btnTestSendCmd;
+    //-----------------------------------------------------------------------
+    //----------------------------TESTING------------------------------------
+    public void testSendCmd(ActionEvent actionEvent) {
+        String cmd = txtTestCmd.getText();
+        Alert alert;
+
+        if(client.isConnected()) {
+            try {
+                String response = client.sendRequest(cmd);
+                String[] respArgs = response.split("\\|");
+
+                switch (respArgs[0]){
+                    case "OK":
+                        alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                        alert.show();
+                        break;
+                    case "ERR":
+                        alert = new Alert(Alert.AlertType.ERROR, "Error occured", ButtonType.OK);
+                        alert.show();
+                        break;
+                }
+                txtOutput.clear();
+                for (String s: respArgs){
+                    txtOutput.appendText(s);
+                    txtOutput.appendText(System.getProperty("line.separator"));
+                }
+            } catch (IOException e) {
+                alert = new Alert(Alert.AlertType.ERROR, "Exception:" + e.getMessage(), ButtonType.OK);
+                alert.show();
+            }
+        }
+        else {
+            alert = new Alert(Alert.AlertType.ERROR, "Client is not connected.", ButtonType.OK);
+            alert.show();
+        }
+    }
+    //-----------------------------------------------------------------------
+
+
 
     //---------------------------------------
     //             Admin GUI
