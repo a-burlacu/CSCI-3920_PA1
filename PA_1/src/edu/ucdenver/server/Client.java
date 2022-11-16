@@ -1,4 +1,4 @@
-package edu.ucdenver.testing;
+package edu.ucdenver.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class Client {
 
 
     public void connect() {
-        System.out.println("meshage: connected to client");
+        System.out.println("STATUS MSG: connected to client");
         displayMessage("Attempting connection to server....");
         try {
             this.serverConnection = new Socket(this.serverIP, this.serverPort);

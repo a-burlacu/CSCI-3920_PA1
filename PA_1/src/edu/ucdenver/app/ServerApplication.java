@@ -16,13 +16,7 @@ public class ServerApplication {
         //TODO: create option menu to display in console via text
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("""
-                Select option:\s
-                [0] START SERVER
-                [1] STOP SERVER
-                [2] LOAD FROM FILE
-                [3] SAVE TO FILE
-                """);
+        System.out.println("Select option\n[0] START SERVER\n[1] STOP SERVER\n[2] LOAD FROM FILE\n[3] SAVE TO FILE");
         String choice = sc.nextLine();
 
         // inform server of app type (ADMIN or USER)
@@ -40,7 +34,7 @@ public class ServerApplication {
                 case "0":
                     try {
                         server = new Server(9888, 10, type, tournament);
-                        server.runServer();
+                        server.run();
 
                     } catch (Exception e) {
                         System.err.print(e);
@@ -52,7 +46,7 @@ public class ServerApplication {
                 //--------------------------------------------------
                 case "1":
                     try {
-                        server.shutdown();
+                        server.stop();
                     } catch (Exception e) {
                         System.err.print(e);
                     }

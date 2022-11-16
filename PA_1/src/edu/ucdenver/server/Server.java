@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server {
+public class Server implements Runnable{
 
     private final int port;
     private final int backlog; // how many clients can wait until they get connected
@@ -43,9 +43,9 @@ public class Server {
     private Socket waitForClientConnection() throws IOException {
         System.out.println("Waiting for a connection....");
         Socket clientConnection = this.serverSocket.accept();
-        System.out.println("clientConnection created");
+        System.out.println("STATUS MSG: clientConnection created");
         this.connectionCounter++;
-        System.out.println("connection counter incremented");
+        System.out.println("STATUS MSG: connection counter incremented");
         System.out.printf("Connection #%d accepted from %s %n", this.connectionCounter,
                 clientConnection.getInetAddress().getHostName());
 
@@ -56,32 +56,65 @@ public class Server {
     //--------------------------------------------------
     //                  run server
     //--------------------------------------------------
-    public void runServer() {
+    public void run() {
+
         ExecutorService executorService = Executors.newCachedThreadPool();
+
         try {
             this.serverSocket = new ServerSocket(this.port, this.backlog);
-            System.out.println("serverSocket created");
+
+            System.out.println("STATUS MSG: serverSocket created");
+
+            /*
+            Add command line menu options here?
+
+             System.out.println("Enter 1 to load Catalog from file named: StoreFile.ser.");
+            Scanner sc = new Scanner(System.in);
+            int option = sc.nextInt();
+            if (option == 1){
+                this.store = Store.loadFromFile();
+                System.out.println("Successfully loaded Store from: StoreFile.ser.");
+            }
+             */
 
             while (true) {
+
+                Socket clientConnection = null;
+                System.out.println("[SERVER] WAITING FOR CLIENT CONNECTION.");
                 try {
-                    Socket clientConnection = this.waitForClientConnection();
+                    clientConnection = this.serverSocket.accept();
+                    System.out.println("[SERVER] ACCEPTED CLIENT CONNECTION.");
 
-                    // Create new thread that executes the client connection
-                    //TODO: figure out how to pass clientType(ADMIN or USER) to ClientWorker objects created as threads
-
-                    ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
-
-                    executorService.execute(cw);
                 }
                 catch (IOException ioe) {
-                    System.out.println("\n-------------------\nServer Terminated");
+                    System.out.println("[SERVER] ERROR ACCEPTING CLIENT CONNECTION.");
                     ioe.printStackTrace();
+                }
+                finally {
+                    try {
+                        // Create new thread that executes the client connection
+
+                        ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
+
+                        executorService.execute(cw);
+                    } catch (Exception e) {
+                        System.err.println("[SERVER] ERROR THE THREAD COULD NOT BE OPENED FOR CLIENT.");
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (IOException ioe) {
             System.out.println("\n++++++ Cannot open the server ++++++\n");
             executorService.shutdown();
+
             ioe.printStackTrace();
+        }
+        finally {
+            try {
+                this.stop();
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
         }
     }
 
@@ -90,11 +123,11 @@ public class Server {
     //--------------------------------------------------
     //                  stop server
     //--------------------------------------------------
-    public void shutdown() throws IOException {
+    public void stop() {
 
         System.out.println("Terminating connection...");
         try {
-            serverSocket.close();
+            this.serverSocket.close();
 
         } catch (IOException e) {
             e.printStackTrace();

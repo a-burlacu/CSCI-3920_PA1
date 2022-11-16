@@ -14,9 +14,7 @@ public class ClientWorker implements Runnable {
     private final Socket clientConnection; // the reference is not changing, but the state(content of the object) will
     private final String clientType;             // ADMIN or USER type
     private final int id;                        // number of client
-
     private Tournament tournament;
-
     private PrintWriter output;
     private BufferedReader input;
     private boolean keepRunningClient;
@@ -108,7 +106,7 @@ public class ClientWorker implements Runnable {
         String response = null; // The response to the server
 
         try {
-            switch(clientType) {
+            switch(this.clientType) {
                 case "A", "a", "ADMIN", "Admin", "admin":
                     switch (arglist[0]) {
 
@@ -239,7 +237,11 @@ public class ClientWorker implements Runnable {
     //--------------------------------------------------
     @Override
     public void run() {
-        System.out.println("you've reached run() in ClientWorker");
+        System.out.println("STATUS MSG: you've reached run() in ClientWorker");
+        BufferedReader input;
+        PrintWriter output;
+        String newMessage;
+
         displayMessage("Getting Data Streams");
         try {
             getOutputStream(clientConnection);

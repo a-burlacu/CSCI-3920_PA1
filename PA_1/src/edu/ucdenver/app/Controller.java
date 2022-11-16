@@ -1,8 +1,7 @@
 package edu.ucdenver.app;
 
-import edu.ucdenver.testing.Client;
+import edu.ucdenver.server.Client;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
