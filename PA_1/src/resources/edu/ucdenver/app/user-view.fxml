@@ -48,7 +48,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Matches by Date">
+            <Tab fx:id="tabMatchesByDate" onSelectionChanged="#updateMatchesByDateSelectors" text="Matches by Date">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -89,7 +89,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Matches by Team">
+            <Tab fx:id="tabMatchesByTeam" onSelectionChanged="#updateMatchesByTeamSelectors" text="Matches by Team">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -130,7 +130,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Lineups by Match">
+            <Tab fx:id="tabLineUpsByMatch" onSelectionChanged="#updateLineUpsByMatchSelectors" text="Lineups by Match">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

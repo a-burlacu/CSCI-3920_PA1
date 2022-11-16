@@ -67,12 +67,15 @@ public class Controller {
     //---------------------------------------
     public ListView lstUpcomingMatches;
     public Tab tabUpcomingMatches;
+    public Tab tabMatchesByDate;
     public ListView lstMatchesByDate;
     public Button btnMatchByDateSubmit;
     public ComboBox selMatchByDate;
+    public Tab tabMatchesByTeam;
     public ListView lstMatchesByTeam;
     public Button btnMatchesByTeamSubmit;
     public ComboBox selMatchesByTeam;
+    public Tab tabLineUpsByMatch;
     public ListView lstLineUpsByMatch;
     public Button btnLineUpsByMatchSubmit;
     public ComboBox selLineUpsByMatch;
@@ -475,6 +478,11 @@ public class Controller {
             }
         }
     }
+    public void updateMatchesByDateSelectors(Event event) {
+        if(this.tabMatchesByDate.isSelected()){
+            this.selMatchByDate.setItems(FXCollections.observableArrayList(this.matches));
+        }
+    }
 
     public void listMatchesByDate(ActionEvent actionEvent) {
         this.selMatchByDate.setItems(FXCollections.observableArrayList(this.matches));
@@ -499,7 +507,11 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateMatchesByTeamSelectors(Event event) {
+        if(this.tabMatchesByTeam.isSelected()){
+            this.selMatchesByTeam.setItems(FXCollections.observableArrayList(this.teams));
+        }
+    }
     public void listMatchesByTeam(ActionEvent actionEvent) {
         this.selMatchesByTeam.setItems(FXCollections.observableArrayList(this.teams));
         String matchTeam = selMatchesByTeam.getValue().toString();
@@ -523,7 +535,11 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateLineUpsByMatchSelectors(Event event) {
+        if(this.tabLineUpsByMatch.isSelected()){
+            this.selLineUpsByMatch.setItems(FXCollections.observableArrayList(this.matches));
+        }
+    }
     public void listLineUpsByMatch(ActionEvent actionEvent) {
         this.selLineUpsByMatch.setItems(FXCollections.observableArrayList(this.matches));
         String matchDate = selLineUpsByMatch.getValue().toString();
