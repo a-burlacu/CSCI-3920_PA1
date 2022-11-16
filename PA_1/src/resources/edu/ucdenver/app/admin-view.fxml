@@ -28,7 +28,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="127.0" layoutY="50.0" prefHeight="202.0" prefWidth="630.0">
+                        <GridPane layoutX="127.0" layoutY="50.0" prefHeight="160.0" prefWidth="630.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.73004150390625" minWidth="10.0" prefWidth="130.31784057617188" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="834.4350891113281" minWidth="10.0" prefWidth="497.6821594238281" />
@@ -42,11 +42,11 @@
                            <children>
                               <Label text="Tournament Name: " GridPane.halignment="RIGHT" />
                               <Label text="Start Date: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtNewTournamentName" GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1" />
+                              <TextField prefHeight="26.0" prefWidth="490.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Label text="End Date: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                              <Button fx:id="btnNewTournamentSubmit" mnemonicParsing="false" onAction="#createTournament" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <DatePicker fx:id="dtpNewTournamentStartDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <DatePicker fx:id="dtpNewTournamentEndDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField prefHeight="25.0" prefWidth="637.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
@@ -68,8 +68,8 @@
                           </rowConstraints>
                            <children>
                               <Label text="Country: " GridPane.halignment="RIGHT" />
-                              <TextField fx:id="txtAddCountry" GridPane.columnIndex="1" />
-                              <Button fx:id="btnAddCountrySubmit" mnemonicParsing="false" onAction="#addCountry" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -92,10 +92,10 @@
                           </rowConstraints>
                            <children>
                               <Label text="Country: " GridPane.halignment="RIGHT" />
+                              <ChoiceBox prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
                               <Label text="Team name: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtAddTeamName" prefHeight="26.0" prefWidth="464.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="btnAddTeam" mnemonicParsing="false" onAction="#addTeam" prefHeight="26.0" prefWidth="130.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="selAddTeamCountry" prefHeight="26.0" prefWidth="260.0" GridPane.columnIndex="1" />
+                              <TextField prefHeight="26.0" prefWidth="464.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="btnAddTeamSubmit" mnemonicParsing="false" onAction="#AddTeam" prefHeight="26.0" prefWidth="130.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
@@ -118,10 +118,10 @@
                            </rowConstraints>
                            <children>
                               <Label text="Country: " GridPane.halignment="RIGHT" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
                               <Label text="Referee Name: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <TextField prefHeight="26.0" prefWidth="464.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtAddRefereeName" prefHeight="26.0" prefWidth="464.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="btnAddRefereeSubmit" mnemonicParsing="false" onAction="#AddReferee" prefHeight="26.0" prefWidth="130.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="selAddRefereeCountry" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -151,12 +151,12 @@
                               <Label text="Player Age: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                               <Label text="Player Height: " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                               <Label text="Player Weight: " GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
+                              <Button fx:id="btnAddPlayerToSquadSubmit" mnemonicParsing="false" onAction="#addPlayerToSquad" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="txtAddPlayerToSquadName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtAddPlayerToSquadAge" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtAddPlayerToSquadHeight" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtAddPlayerToSquadWeight" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="selAddPlayerToSquadTeam" prefHeight="26.0" prefWidth="250.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -182,10 +182,10 @@
                               <Label text="Date of Match: " GridPane.halignment="RIGHT" />
                               <Label text="Team A: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                               <Label text="Team B: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="274.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Button fx:id="btnAddMatchSubmit" mnemonicParsing="false" onAction="#addMatch" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="selAddMatchTeamA" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="selAddMatchTeamB" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="dtpAddMatchDate" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -209,9 +209,9 @@
                            <children>
                               <Label text="Match (date): " GridPane.halignment="RIGHT" />
                               <Label text="Referee: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="262.0" GridPane.columnIndex="1" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="btnAddRefereeToMatchSubmit" mnemonicParsing="false" onAction="#addReferee" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="selAddRefereeToMatchDate" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="selAddRefereeName" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
@@ -234,13 +234,13 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ChoiceBox prefHeight="26.0" prefWidth="269.0" GridPane.columnIndex="1" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="272.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Label text="Match (date): " GridPane.halignment="RIGHT" />
                               <Label text="Team: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                               <Label text="Player: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Button fx:id="btnAddPlayerToLineUpSubmit" mnemonicParsing="false" onAction="#addPlayerToLineUp" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="selAddPlayerToLineupMatch" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="selAddPlayerToLineUpTeam" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="selAddPlayerToLineUpPlayer" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
@@ -263,13 +263,13 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ChoiceBox prefHeight="26.0" prefWidth="263.0" GridPane.columnIndex="1" />
+                              <Button fx:id="btnSetMatchScoreSubmit" mnemonicParsing="false" onAction="#setMatchScore" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Label text="Match (date): " GridPane.halignment="RIGHT" />
                               <Label text="Score 1: " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                               <Label text="Score 2: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="txtSetMatchScore1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="txtSetMatchScore2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ComboBox fx:id="selSetMatchScoreDate" prefHeight="26.0" prefWidth="249.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children>
