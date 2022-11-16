@@ -51,12 +51,12 @@ public class Server {
     //--------------------------------------------------
 
     private Socket waitForClientConnection() throws IOException {
-        System.out.println("Waiting for a connection....");
+        System.out.println("<status message: waiting for a connection....>\n");
         Socket clientConnection = this.serverSocket.accept();
-        System.out.println("STATUS MSG: clientConnection created");
+        System.out.println("<status message: client connection socket created>\n");
         this.connectionCounter++;
-        System.out.println("STATUS MSG: connection counter incremented");
-        System.out.printf("Connection #%d accepted from %s %n", this.connectionCounter,
+        System.out.println("<status message: connection counter incremented>\n");
+        System.out.printf("Connection: [%s #%d] accepted from %s %n\n", clientType, connectionCounter,
                 clientConnection.getInetAddress().getHostName());
 
         return clientConnection;
@@ -73,7 +73,7 @@ public class Server {
         try {
             this.serverSocket = new ServerSocket(this.port, this.backlog);
 
-            System.out.println("STATUS MSG: 'serverSocket created'");
+            System.out.println("\n<status message: server socket created>\n");
 
 
             while (true) {
@@ -94,11 +94,11 @@ public class Server {
                         // Create new thread that executes the client connection
 
                         //ClientWorker cw = new ClientWorker(clientConnection, this.tournament, this.clientType, this.connectionCounter);
-                        ClientWorker cw = new ClientWorker(clientConnection, this.clientType, this.connectionCounter);
-                        System.out.println("STATUS MSG: 'ClientWorker object created'");
+                        ClientWorker cw = new ClientWorker(clientConnection, clientType, connectionCounter);
+                        System.out.println("<status message: ClientWorker object created>\n");
                         executorService.execute(cw);
 
-                        System.out.println("STATUS MSG: 'New client thread initialized'");
+                        System.out.println("<status message: new client thread initialized>\n");
 
                     } catch (Exception e) {
                         System.err.println("[SERVER] Error creating thread for client.");
