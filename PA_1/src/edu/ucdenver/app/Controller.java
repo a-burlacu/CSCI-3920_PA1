@@ -24,29 +24,36 @@ public class Controller {
     public TextField txtAddCountry;
 
     public Button btnAddCountrySubmit;
+    public Tab tabAddTeam;
     public TextField txtAddTeamName;
     public Button btnAddTeamSubmit;
     public ComboBox selAddTeamCountry;
+    public Tab tabAddReferee;
     public TextField txtAddRefereeName;
     public Button btnAddRefereeSubmit;
     public ComboBox selAddRefereeCountry;
+    public Tab tabAddPlayerToSquad;
     public Button btnAddPlayerToSquadSubmit;
     public TextField txtAddPlayerToSquadName;
     public TextField txtAddPlayerToSquadAge;
     public TextField txtAddPlayerToSquadHeight;
     public TextField txtAddPlayerToSquadWeight;
     public ComboBox selAddPlayerToSquadTeam;
+    public Tab tabAddMatch;
     public Button btnAddMatchSubmit;
     public ComboBox selAddMatchTeamA;
     public ComboBox selAddMatchTeamB;
     public DatePicker dtpAddMatchDate;
+    public Tab tabAddRefereeToMatch;
     public Button btnAddRefereeToMatchSubmit;
     public ComboBox selAddRefereeToMatchDate;
     public ComboBox selAddRefereeName;
+    public Tab tabAddPlayerToLineUp;
     public Button btnAddPlayerToLineUpSubmit;
     public ComboBox selAddPlayerToLineupMatch;
     public ComboBox selAddPlayerToLineUpTeam;
     public ComboBox selAddPlayerToLineUpPlayer;
+    public Tab tabRecordAMatchScore;
     public Button btnSetMatchScoreSubmit;
     public TextField txtSetMatchScore1;
     public TextField txtSetMatchScore2;
@@ -214,6 +221,11 @@ public class Controller {
                 break;
         }
     }
+    public void updateCountrySelector(Event event) {
+        if(this.tabAddTeam.isSelected()){
+            this.selAddTeamCountry.setItems(FXCollections.observableArrayList(this.countries));
+        }
+    }
 
     public void addTeam(ActionEvent actionEvent) {
         this.selAddTeamCountry.setItems(FXCollections.observableArrayList(this.countries));
@@ -222,7 +234,7 @@ public class Controller {
         this.teams.add(teamNameText);
         Alert alert;
 
-        String cmd = String.format("%s|%s|%s","5", countryNameSelection, teamNameText);
+        String cmd = String.format("%s|%s|%s","5", teamNameText, countryNameSelection);
         String response = sendCommand(cmd);
         String[] respArgs = response.split("\\|");
 
@@ -235,6 +247,11 @@ public class Controller {
                 alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
                 alert.show();
                 break;
+        }
+    }
+    public void updateAddRefereeCountrySelector(Event event) {
+        if(this.tabAddReferee.isSelected()){
+            this.selAddRefereeCountry.setItems(FXCollections.observableArrayList(this.countries));
         }
     }
 
@@ -245,7 +262,7 @@ public class Controller {
         this.referees.add(refereeNameText);
         Alert alert;
 
-        String cmd = String.format("%s|%s|%s","6", countryNameSelection, refereeNameText);
+        String cmd = String.format("%s|%s|%s","6", refereeNameText, countryNameSelection);
         String response = sendCommand(cmd);
         String[] respArgs = response.split("\\|");
 
@@ -260,7 +277,11 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateAddPlayerToSquadTeamSelector(Event event) {
+        if(this.tabAddPlayerToSquad.isSelected()){
+            this.selAddPlayerToSquadTeam.setItems(FXCollections.observableArrayList(this.teams));
+        }
+    }
     public void addPlayerToSquad(ActionEvent actionEvent) {
         this.selAddPlayerToSquadTeam.setItems(FXCollections.observableArrayList(this.teams));
         String playerTeamSelection = this.selAddPlayerToSquadTeam.getValue().toString();
@@ -287,7 +308,12 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateAddMatchSelectors(Event event) {
+        if(this.tabAddMatch.isSelected()){
+            this.selAddMatchTeamA.setItems(FXCollections.observableArrayList(this.teams));
+            this.selAddMatchTeamB.setItems(FXCollections.observableArrayList(this.teams));
+        }
+    }
     public void addMatch(ActionEvent actionEvent) {
         this.selAddMatchTeamA.setItems(FXCollections.observableArrayList(this.teams));
         this.selAddMatchTeamB.setItems(FXCollections.observableArrayList(this.teams));
@@ -312,7 +338,12 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateAddRefereeToMatchSelectors(Event event) {
+        if(this.tabAddRefereeToMatch.isSelected()){
+            this.selAddRefereeToMatchDate.setItems(FXCollections.observableArrayList(this.matches));
+            this.selAddRefereeName.setItems(FXCollections.observableArrayList(this.referees));
+        }
+    }
     public void addReferee(ActionEvent actionEvent) {
         this.selAddRefereeToMatchDate.setItems(FXCollections.observableArrayList(this.matches));
         this.selAddRefereeName.setItems(FXCollections.observableArrayList(this.referees));
@@ -335,7 +366,13 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateAddPlayerToLineUpSelectors(Event event) {
+        if(this.tabAddPlayerToLineUp.isSelected()){
+            this.selAddPlayerToLineupMatch.setItems(FXCollections.observableArrayList(this.matches));
+            this.selAddPlayerToLineUpTeam.setItems(FXCollections.observableArrayList(this.teams));
+            this.selAddPlayerToLineUpPlayer.setItems(FXCollections.observableArrayList(this.players));
+        }
+    }
     public void addPlayerToLineUp(ActionEvent actionEvent) {
         this.selAddPlayerToLineupMatch.setItems(FXCollections.observableArrayList(this.matches));
         this.selAddPlayerToLineUpTeam.setItems(FXCollections.observableArrayList(this.teams));
@@ -360,7 +397,11 @@ public class Controller {
                 break;
         }
     }
-
+    public void updateRecordAMatchScoreSelectors(Event event) {
+        if(this.tabRecordAMatchScore.isSelected()){
+            this.selSetMatchScoreDate.setItems(FXCollections.observableArrayList(this.matches));
+        }
+    }
     public void setMatchScore(ActionEvent actionEvent) {
         this.selSetMatchScoreDate.setItems(FXCollections.observableArrayList(this.matches));
         String matchDate = selSetMatchScoreDate.getValue().toString();
