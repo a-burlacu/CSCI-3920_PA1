@@ -121,10 +121,10 @@ public class ClientWorker implements Runnable {
                             break;
 
                         case "3":       //create a new tournament
-                            String[] start = arglist[2].split(","); //"YYYY","MM,"DD"
+                            String[] start = arglist[2].split("-"); //"YYYY"-"MM-"DD"
                             LocalDate startDate = LocalDate.of(Integer.parseInt(start[0]), Integer.parseInt(start[1]), Integer.parseInt(start[2]));
 
-                            String[] end = arglist[3].split(","); //"YYYY","MM,"DD"
+                            String[] end = arglist[3].split("-"); //"YYYY"-"MM-"DD"
                             LocalDate endDate = LocalDate.of(Integer.parseInt(end[0]), Integer.parseInt(end[1]), Integer.parseInt(end[2]));
 
                             // not sure if this should be 'this.tournament' or just 'tournament' since it was never initialized in constructor
@@ -133,7 +133,7 @@ public class ClientWorker implements Runnable {
                             break;
 
                         case "4":       //add country
-                            tournament.addCountry(arglist[1]);
+                            tournament.addCountry(arglist[1].toString());
                             response = "OK";
                             break;
 
@@ -154,28 +154,28 @@ public class ClientWorker implements Runnable {
                             break;
 
                         case "8":       //add a match on a particular date between two national teams
-                            String[] matchDate = arglist[1].split(","); //"YYYY","MM,"DD"
+                            String[] matchDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateMatch = LocalDate.of(Integer.parseInt(matchDate[0]), Integer.parseInt(matchDate[1]), Integer.parseInt(matchDate[2]));
                             tournament.addMatch(dateMatch, arglist[2], arglist[3]);
                             response = "OK";
                             break;
 
                         case "9":       //assign a referee to a match
-                            String[] refDate = arglist[1].split(","); //"YYYY","MM,"DD"
+                            String[] refDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateRef = LocalDate.of(Integer.parseInt(refDate[0]), Integer.parseInt(refDate[1]), Integer.parseInt(refDate[2]));
                             tournament.addRefereeToMatch(dateRef, arglist[2]);
                             response = "OK";
                             break;
 
                         case "10":      //add a player to a national teams lineup for a particular match
-                            String[] lineupDate = arglist[1].split(","); //"YYYY","MM,"DD"
+                            String[] lineupDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateLineup = LocalDate.of(Integer.parseInt(lineupDate[0]), Integer.parseInt(lineupDate[1]), Integer.parseInt(lineupDate[2]));
                             tournament.addPlayerToMatch(dateLineup, arglist[2], arglist[3]);
                             response = "OK";
                             break;
 
                         case "11":      //record the score of a completed match
-                            String[] scoreDate = arglist[1].split(","); //"YYYY","MM,"DD"
+                            String[] scoreDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateScore = LocalDate.of(Integer.parseInt(scoreDate[0]), Integer.parseInt(scoreDate[1]), Integer.parseInt(scoreDate[2]));
                             tournament.setMatchScore(dateScore, Integer.parseInt(arglist[2]), Integer.parseInt(arglist[3]));
                             response = "OK";
@@ -192,7 +192,7 @@ public class ClientWorker implements Runnable {
                             break;
 
                         case "2":        //get a list of matches on a particular date
-                            String[] matchDate = arglist[1].split(","); //"YYYY","MM,"DD"
+                            String[] matchDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateMatch = LocalDate.of(Integer.parseInt(matchDate[0]), Integer.parseInt(matchDate[1]), Integer.parseInt(matchDate[2]));
                             tournament.getMatchesOn(dateMatch);
                             response = "OK";
@@ -205,7 +205,7 @@ public class ClientWorker implements Runnable {
                             break;
 
                         case "4":        //get the lineups for a match either past or future
-                            String[] lineupDate = arglist[1].split(","); //"YYYY","MM,"DD"
+                            String[] lineupDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateLineup = LocalDate.of(Integer.parseInt(lineupDate[0]), Integer.parseInt(lineupDate[1]), Integer.parseInt(lineupDate[2]));
                             tournament.getMatchLineUps(dateLineup);
                             response = "OK";
