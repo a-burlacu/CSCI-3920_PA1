@@ -3,7 +3,9 @@ package edu.ucdenver.app;
 import edu.ucdenver.server.Client;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -11,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+    //---------------------------------------
+    //             Admin GUI
+    //---------------------------------------
     public TextField txtNewTournamentName;
 
     public Button btnNewTournamentSubmit;
@@ -46,6 +51,23 @@ public class Controller {
     public TextField txtSetMatchScore1;
     public TextField txtSetMatchScore2;
     public ComboBox selSetMatchScoreDate;
+    public Button btnExitAdminApp;
+
+    //---------------------------------------
+    //              User GUI
+    //---------------------------------------
+    public ListView lstUpcomingMatches;
+    public Tab tabUpcomingMatches;
+    public ListView lstMatchesByDate;
+    public Button btnMatchByDateSubmit;
+    public ComboBox selMatchByDate;
+    public ListView lstMatchesByTeam;
+    public Button btnMatchesByTeamSubmit;
+    public ComboBox selMatchesByTeam;
+    public ListView lstLineUpsByMatch;
+    public Button btnLineUpsByMatchSubmit;
+    public ComboBox selLineUpsByMatch;
+    public Button btnExitUserApp;
     Client client;
 
     private List<String> countries;
@@ -73,6 +95,13 @@ public class Controller {
         this.selAddPlayerToLineUpTeam = new ComboBox<>();
         this.selAddPlayerToLineUpPlayer = new ComboBox();
         this.selSetMatchScoreDate = new ComboBox<>();
+        this.lstUpcomingMatches = new ListView<>();
+        this.lstMatchesByDate = new ListView<>();
+        this.selMatchByDate = new ComboBox<>();
+        this.lstMatchesByTeam = new ListView<>();
+        this.selMatchesByTeam = new ComboBox<>();
+        this.lstLineUpsByMatch = new ListView<>();
+        this.selLineUpsByMatch = new ComboBox<>();
     }
 
     private String sendCommand(String cmd) {
@@ -90,6 +119,10 @@ public class Controller {
         }
         return response;
     }
+
+    //---------------------------------------
+    //             Admin GUI
+    //---------------------------------------
 
     public void createTournament(ActionEvent actionEvent) {
         String tournamentNameText = this.txtNewTournamentName.getText();
@@ -134,7 +167,7 @@ public class Controller {
         }
     }
 
-    public void AddTeam(ActionEvent actionEvent) {
+    public void addTeam(ActionEvent actionEvent) {
         this.selAddTeamCountry.setItems(FXCollections.observableArrayList(this.countries));
         String countryNameSelection = this.selAddTeamCountry.getValue().toString();
         String teamNameText = this.txtAddTeamName.getText();
@@ -302,4 +335,54 @@ public class Controller {
                 break;
         }
     }
+    public void exitAdminApp(ActionEvent actionEvent) {
+        Stage stage = (Stage) this.btnExitAdminApp.getScene().getWindow();
+        stage.close();
+    }
+
+    //---------------------------------------
+    //              User GUI
+    //---------------------------------------
+
+    public void listUpcomingMatches(Event event) {
+        if(this.tabUpcomingMatches.isSelected()){
+            String cmd = String.format("%s|","1");
+            List<String> test = new ArrayList<>();
+            test.add("test");
+            this.lstUpcomingMatches.setItems(FXCollections.observableArrayList(test));
+        }
+    }
+
+    public void listMatchesByDate(ActionEvent actionEvent) {
+        this.selMatchByDate.setItems(FXCollections.observableArrayList(this.matches));
+        String matchDate = selMatchByDate.getValue().toString();
+        String cmd = String.format("%s|%s","2", matchDate);
+        List<String> test = new ArrayList<>();
+        test.add("test");
+        this.lstMatchesByDate.setItems(FXCollections.observableArrayList(test));
+    }
+
+    public void listMatchesByTeam(ActionEvent actionEvent) {
+        this.selMatchesByTeam.setItems(FXCollections.observableArrayList(this.teams));
+        String matchTeam = selMatchesByTeam.getValue().toString();
+        String cmd = String.format("%s|%s","3", matchTeam);
+        List<String> test = new ArrayList<>();
+        test.add("test");
+        this.lstMatchesByTeam.setItems(FXCollections.observableArrayList(test));
+    }
+
+    public void listLineUpsByMatch(ActionEvent actionEvent) {
+        this.selLineUpsByMatch.setItems(FXCollections.observableArrayList(this.matches));
+        String matchDate = selLineUpsByMatch.getValue().toString();
+        String cmd = String.format("%s|%s", "3", matchDate);
+        List<String> test = new ArrayList<>();
+        test.add("test");
+        this.lstLineUpsByMatch.setItems(FXCollections.observableArrayList(test));
+    }
+
+    public void exitUserApp(ActionEvent actionEvent) {
+        Stage stage = (Stage) this.btnExitUserApp.getScene().getWindow();
+        stage.close();
+    }
+
 }

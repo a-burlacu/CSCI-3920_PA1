@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
@@ -23,7 +23,7 @@
     <children>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-            <Tab text="Upcoming Matches">
+            <Tab fx:id="tabUpcomingMatches" onSelectionChanged="#listUpcomingMatches" text="Upcoming Matches">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -36,7 +36,7 @@
                             <RowConstraints maxHeight="352.0" minHeight="0.0" prefHeight="347.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ListView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                              <ListView fx:id="lstUpcomingMatches" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                               <Label text="Upcoming Matches" textFill="#5c82c9" GridPane.halignment="CENTER">
                                  <font>
                                     <Font size="20.0" />
@@ -62,7 +62,7 @@
                               <RowConstraints maxHeight="352.0" minHeight="0.0" prefHeight="275.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ListView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                              <ListView fx:id="lstMatchesByDate" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
                               <Label text="Matches" textFill="#5c82c9" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="20.0" />
@@ -79,8 +79,8 @@
                                 </rowConstraints>
                                  <children>
                                     <Label text="Match Date: " GridPane.halignment="RIGHT" />
-                                    <ChoiceBox prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="btnMatchByDateSubmit" mnemonicParsing="false" onAction="#listMatchesByDate" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="selMatchByDate" prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -103,7 +103,7 @@
                               <RowConstraints maxHeight="352.0" minHeight="0.0" prefHeight="276.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ListView prefHeight="278.0" prefWidth="665.0" GridPane.rowIndex="2" />
+                              <ListView fx:id="lstMatchesByTeam" prefHeight="278.0" prefWidth="665.0" GridPane.rowIndex="2" />
                               <Label text="Matches" textFill="#5c82c9" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="20.0" />
@@ -120,8 +120,8 @@
                                  </rowConstraints>
                                  <children>
                                     <Label text="Team: " GridPane.halignment="RIGHT" />
-                                    <ChoiceBox prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="btnMatchesByTeamSubmit" mnemonicParsing="false" onAction="#listMatchesByTeam" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="selMatchesByTeam" prefWidth="254.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -144,7 +144,7 @@
                               <RowConstraints maxHeight="352.0" minHeight="0.0" prefHeight="278.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ListView prefHeight="260.0" prefWidth="665.0" GridPane.rowIndex="2" />
+                              <ListView fx:id="lstLineUpsByMatch" prefHeight="260.0" prefWidth="665.0" GridPane.rowIndex="2" />
                               <Label text="Lineups" textFill="#5c82c9" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="20.0" />
@@ -161,8 +161,8 @@
                                  </rowConstraints>
                                  <children>
                                     <Label text="Match (date): " GridPane.halignment="RIGHT" />
-                                    <ChoiceBox prefHeight="26.0" prefWidth="254.0" GridPane.columnIndex="1" />
-                                    <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="btnLineUpsByMatchSubmit" mnemonicParsing="false" onAction="#listLineUpsByMatch" prefHeight="26.0" prefWidth="183.0" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="selLineUpsByMatch" prefWidth="254.0" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -173,7 +173,7 @@
             </Tab>
             </tabs>
         </TabPane>
-      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="183.0" text="Exit" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="btnExitUserApp" mnemonicParsing="false" onAction="#exitUserApp" prefHeight="26.0" prefWidth="183.0" text="Exit" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
     </children>
 
 </GridPane>
