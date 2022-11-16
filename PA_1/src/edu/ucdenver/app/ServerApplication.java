@@ -28,11 +28,12 @@ public class ServerApplication {
                 // inform server of app type (ADMIN or USER)
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Select client type:\n" +
-                        "[A] ADMIN\n" +
-                        "[U] USER");
+                        "\t[A] ADMIN\n" +
+                        "\t[U] USER");
                 String type = sc.nextLine();
 
 
+                outerloop:
                 switch(type) {
                     //--------------------------------------------------
                     //              [A] admin permissions
@@ -43,7 +44,8 @@ public class ServerApplication {
                                 "\t[0] START SERVER\n" +
                                 "\t[1] STOP SERVER\n" +
                                 "\t[2] LOAD FROM FILE\n" +
-                                "\t[3] SAVE TO FILE");
+                                "\t[3] SAVE TO FILE\n" +
+                                "\t[4] BACK");
 
                         String adminChoice = adminSc.nextLine();
 
@@ -104,6 +106,11 @@ public class ServerApplication {
                                     System.err.print(e);
                                 }
                                 break;
+                            //--------------------------------------------------
+                            //            [4] exit to main menu
+                            //-------------------------------------------------
+                            case "4":
+                                break outerloop;
                     }
 
                     //--------------------------------------------------
