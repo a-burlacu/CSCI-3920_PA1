@@ -12,7 +12,7 @@ public class UserApp extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(UserApp.class.getResource("user-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 720, 480);
-        stage.setTitle("2022 World Cup Client");
+        stage.setTitle("2022 World Cup Client - User");
         stage.setScene(scene);
         stage.show();
     }
