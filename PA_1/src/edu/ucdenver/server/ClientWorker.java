@@ -194,28 +194,24 @@ public class ClientWorker implements Runnable {
                     switch (arglist[0]) {
 
                         case "1":        //get a list of the upcoming matches
-                            tournament.getUpcomingMatches();
-                            response = "OK";
+                            response = "OK|" + tournament.getUpcomingMatches();
                             break;
 
                         case "2":        //get a list of matches on a particular date
                             String[] matchDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateMatch = LocalDate.of(Integer.parseInt(matchDate[0]), Integer.parseInt(matchDate[1]), Integer.parseInt(matchDate[2]));
-                            tournament.getMatchesOn(dateMatch);
-                            response = "OK";
+                            response = "OK|" + tournament.getMatchesOn(dateMatch);
                             break;
 
 
                         case "3":        // get a list of all games for a specific team
-                            tournament.getMatchesFor(arglist[1]);
-                            response = "OK";
+                            response = "OK|" + tournament.getMatchesFor(arglist[1]);
                             break;
 
                         case "4":        //get the lineups for a match either past or future
                             String[] lineupDate = arglist[1].split("-"); //"YYYY","MM,"DD"
                             LocalDate dateLineup = LocalDate.of(Integer.parseInt(lineupDate[0]), Integer.parseInt(lineupDate[1]), Integer.parseInt(lineupDate[2]));
-                            tournament.getMatchLineUps(dateLineup);
-                            response = "OK";
+                            response = "OK|" + tournament.getMatchLineUps(dateLineup);
                             break;
                     }
             }
