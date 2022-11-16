@@ -38,7 +38,9 @@ public class ServerApplication {
                     //--------------------------------------------------
                     //              [A] admin permissions
                     //--------------------------------------------------
+
                     case "A":
+                        type = "ADMIN";
                         Scanner adminSc = new Scanner(System.in);
                         System.out.println("Select option:\n" +
                                 "\t[0] START SERVER\n" +
@@ -48,6 +50,7 @@ public class ServerApplication {
                                 "\t[4] BACK");
 
                         String adminChoice = adminSc.nextLine();
+
 
                         switch (adminChoice) {
                             //--------------------------------------------------
@@ -111,16 +114,24 @@ public class ServerApplication {
                             //-------------------------------------------------
                             case "4":
                                 break outerloop;
+
+                            default:
+                                System.out.println("ERROR| Invalid option selected. Retry.\n");
+                                Thread.sleep(1000);
+                                break outerloop;
+
                     }
 
                     //--------------------------------------------------
                     //              [U] user permissions
                     //--------------------------------------------------
                     case "U":
+                        type = "USER";
                         Scanner userSc = new Scanner(System.in);
                         System.out.println("Select option:\n" +
                                 "\t[0] START SERVER\n" +
-                                "\t[1] STOP SERVER");
+                                "\t[1] STOP SERVER\n" +
+                                "\t[2] BACK");
 
                         String userChoice = userSc.nextLine();
 
@@ -155,6 +166,16 @@ public class ServerApplication {
                                     System.err.print(e);
                                 }
                                 break;
+                            //--------------------------------------------------
+                            //            [2] exit to main menu
+                            //-------------------------------------------------
+                            case "2":
+                                break outerloop;
+
+                            default:
+                                System.out.println("\nERROR| Invalid option selected. Retry.\n");
+                                Thread.sleep(1000);
+                                break outerloop;
                         }
 
                 }
