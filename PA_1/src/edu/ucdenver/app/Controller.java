@@ -438,11 +438,12 @@ public class Controller {
         String response = sendCommand(cmd);
         String [] responseArgs = response.split("\\|");
 
-        String [] newTournament = responseArgs[1].split(",");
+        String [] createTournament = responseArgs[1].split(",");
         String [] listOfCountries = responseArgs[2].split(",");
         String [] listOfMatches = responseArgs[3].split(",");
-        String [] listOfPlayers = responseArgs[4].split(",");
+        String [] listOfTeams = responseArgs[4].split(",");
         String [] listOfReferees = responseArgs[5].split(",");
+        String [] listOfPlayers = responseArgs[6].split(",");
 
         this.countries.addAll(Arrays.asList(listOfCountries));
 
@@ -452,11 +453,13 @@ public class Controller {
             this.matches.add(localDate);
         }
 
-        this.players.addAll(Arrays.asList(listOfPlayers));
+        this.teams.addAll(Arrays.asList(listOfTeams));
 
         this.referees.addAll(Arrays.asList(listOfReferees));
 
-        cmd = String.format("%s|%s|%s|%s","3", newTournament[1], newTournament[2], newTournament[3]);
+        this.players.addAll(Arrays.asList(listOfPlayers));
+
+        cmd = String.format("%s|%s|%s|%s","3", createTournament[1], createTournament[2], createTournament[3]);
         response = sendCommand(cmd);
         String[] respArgs = response.split("\\|");
         Alert alert;
