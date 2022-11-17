@@ -12,13 +12,13 @@ public class Tournament implements Serializable{
     private LocalDate endDate;
 
     private List<Match> listMatches;
-
     private List<Team> listTeams;
-
     private List<Referee> listReferees;
-
     private List<Country> participatingCountries;
 
+    //--------------------------------------------------
+    //                  constructors
+    //--------------------------------------------------
     public Tournament(String name, LocalDate startDate, LocalDate endDate){
         this.name = name;
         this.startDate = startDate;
@@ -29,6 +29,11 @@ public class Tournament implements Serializable{
         this.listReferees = new ArrayList<>();
         this.participatingCountries = new ArrayList<>();
     }
+
+
+    //--------------------------------------------------
+    //                    getters
+    //--------------------------------------------------
 
     public List<Match> getListMatches(){
         return listMatches;
@@ -50,6 +55,10 @@ public class Tournament implements Serializable{
         return name;
     }
 
+    //--------------------------------------------------
+    //                    setters
+    //--------------------------------------------------
+
     public void setName(String name) {
         this.name = name;
     }
@@ -69,6 +78,11 @@ public class Tournament implements Serializable{
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+
+    //--------------------------------------------------
+    //                  class methods
+    //--------------------------------------------------
 
     public static Tournament loadFromFile(String filename){
         ObjectInputStream ois = null;
@@ -441,10 +455,14 @@ public class Tournament implements Serializable{
         return matchLineUps;
     }
 
-    @Override
+
     public synchronized String toString(){
-        return String.format("\nTournament name: %s \nStart Date: %s \nEnd Date: %s \n",
-                this.name, this.startDate.toString(), this.endDate.toString());
+        StringBuilder output = new StringBuilder();
+        output.append(String.format("Tournament name: %s\n", this.name));
+        output.append(String.format("Start Date: %s\n", this.startDate));
+        output.append(String.format("End Date: %s\n", this.endDate));
+
+        return output.toString();
     }
 
 }
