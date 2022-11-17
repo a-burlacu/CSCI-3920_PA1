@@ -127,7 +127,7 @@ public class Controller {
 
             } catch (IOException e) {
                 response = "ERR|" + e.getMessage();
-
+                //client.disconnect();
             }
         } else {
             response = "ERR| Client is not connected.";
@@ -207,7 +207,6 @@ public class Controller {
 
     public void addCountry(ActionEvent actionEvent) {
         String countryNameText = this.txtAddCountry.getText();
-        countries.add(countryNameText);
         Alert alert;
 
         String cmd = String.format("%s|%s","4",countryNameText);
@@ -218,6 +217,7 @@ public class Controller {
             case "OK":
                 alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
                 alert.show();
+                countries.add(countryNameText);
                 break;
             case "ERR":
                 alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
@@ -235,7 +235,6 @@ public class Controller {
         this.selAddTeamCountry.setItems(FXCollections.observableArrayList(this.countries));
         String countryNameSelection = this.selAddTeamCountry.getValue().toString();
         String teamNameText = this.txtAddTeamName.getText();
-        this.teams.add(teamNameText);
         Alert alert;
 
         String cmd = String.format("%s|%s|%s","5", teamNameText, countryNameSelection);
@@ -246,6 +245,7 @@ public class Controller {
             case "OK":
                 alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
                 alert.show();
+                this.teams.add(teamNameText);
                 break;
             case "ERR":
                 alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
@@ -263,7 +263,6 @@ public class Controller {
         this.selAddRefereeCountry.setItems(FXCollections.observableArrayList(this.countries));
         String countryNameSelection = this.selAddRefereeCountry.getValue().toString();
         String refereeNameText = this.txtAddRefereeName.getText();
-        this.referees.add(refereeNameText);
         Alert alert;
 
         String cmd = String.format("%s|%s|%s","6", refereeNameText, countryNameSelection);
@@ -274,6 +273,7 @@ public class Controller {
             case "OK":
                 alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
                 alert.show();
+                this.referees.add(refereeNameText);
                 break;
             case "ERR":
                 alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
@@ -293,7 +293,6 @@ public class Controller {
         String playerAgeText = this.txtAddPlayerToSquadAge.getText();
         String playerHeightText = this.txtAddPlayerToSquadHeight.getText();
         String playerWeightText = this.txtAddPlayerToSquadWeight.getText();
-        this.players.add(playerNameText);
         Alert alert;
 
         String cmd = String.format("%s|%s|%s|%s|%s|%s","7", playerTeamSelection, playerNameText, playerAgeText,
@@ -305,6 +304,7 @@ public class Controller {
             case "OK":
                 alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
                 alert.show();
+                this.players.add(playerNameText);
                 break;
             case "ERR":
                 alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
@@ -324,7 +324,6 @@ public class Controller {
         LocalDate dateOfMatch = dtpAddMatchDate.getValue();
         String teamASelection = selAddMatchTeamA.getValue().toString();
         String teamBSelection = selAddMatchTeamB.getValue().toString();
-        this.matches.add(dateOfMatch);
         Alert alert;
 
         String cmd = String.format("%s|%s|%s|%s","8", dateOfMatch.toString(), teamASelection, teamBSelection);
@@ -335,6 +334,7 @@ public class Controller {
             case "OK":
                 alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
                 alert.show();
+                this.matches.add(dateOfMatch);
                 break;
             case "ERR":
                 alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
@@ -495,6 +495,7 @@ public class Controller {
     public void exitAdminApp(ActionEvent actionEvent) {
         Stage stage = (Stage) this.btnExitAdminApp.getScene().getWindow();
         stage.close();
+        //client.disconnect();
     }
 
     //---------------------------------------
@@ -575,5 +576,6 @@ public class Controller {
     public void exitUserApp(ActionEvent actionEvent) {
         Stage stage = (Stage) this.btnExitUserApp.getScene().getWindow();
         stage.close();
+        //client.disconnect();
     }
 }
