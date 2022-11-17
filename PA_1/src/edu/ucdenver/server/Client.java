@@ -42,21 +42,21 @@ public class Client {
 
 
     public void connect() {
-        System.out.println("<status message: connected to client>\n");
+        System.out.println("<status message: new client created>");
         displayMessage("Attempting connection to server....");
         try {
             this.serverConnection = new Socket(this.serverIP, this.serverPort);
             this.isConnected = true; // At this point, if no exception then we're connected!
             this.output = this.getOutputStream();
             this.input = this.getInputStream();
-            displayMessage("Connected");
+            displayMessage("Connected to server");
 
         } catch (IOException e) { // If something went wrong...
             this.input = null;
             this.output = null;
             this.serverConnection = null;
             this.isConnected = false;
-            displayMessage("Not Connected");
+            displayMessage("Not Connected to server");
             // Something went wrong, and we don't know the state, so re-initialize everything
             // This will make the client consistent!!
         }
@@ -69,7 +69,7 @@ public class Client {
     }
 
     public void disconnect() {
-        displayMessage("\n>> Terminating Client Connection to Server");
+        displayMessage(">> Terminating Client Connection to Server");
         try {
             this.input.close();
         } catch (IOException | NullPointerException e) {
@@ -90,15 +90,15 @@ public class Client {
 
     public String sendRequest(String request) throws IOException { // Send message and returns the server response
         this.output.println(request);
-        displayMessage("CLIENT REQUEST >>" + request);
+        displayMessage("CLIENT REQUEST >> " + request);
         String srvResponse = this.input.readLine();
-        displayMessage("SERVER RESPONSE >> " + srvResponse);
+        displayMessage("SERVER RESPONSE << " + srvResponse);
 
         return srvResponse;
     }
 
     private void displayMessage(String message) { // We can improve this method to be log-type one
-        System.out.println("[CLIENT] "+ message);
+        System.out.println("[CLIENT] "+ message );
     }
 }
 

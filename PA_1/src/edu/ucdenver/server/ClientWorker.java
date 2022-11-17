@@ -1,5 +1,7 @@
 package edu.ucdenver.server;
 
+import edu.ucdenver.app.AdminApp;
+import edu.ucdenver.app.UserApp;
 import edu.ucdenver.tournament.Tournament;
 
 import java.io.BufferedReader;
@@ -8,6 +10,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
+import static javafx.application.Application.launch;
 
 public class ClientWorker implements Runnable {
 
@@ -19,30 +24,39 @@ public class ClientWorker implements Runnable {
     private BufferedReader input;
     private boolean keepRunningClient;
 
+    ArrayList<AdminApp> adminApps = new ArrayList<>(); //List of admin connections
+    ArrayList<UserApp> userApps = new ArrayList<>(); //List of user connections
+    private int userCounter;
+    private int adminCounter;
+
     //--------------------------------------------------
     //                  constructors
     //--------------------------------------------------
-//    public ClientWorker(Socket connection,Tournament tournament, String clientType, int id){
-//
-//        this.clientConnection = connection;
-//        this.tournament = tournament;
-//        this.clientType = clientType;
-//        this.id = id;
-//        this.keepRunningClient = true;
-//    }
-    public ClientWorker(Socket connection, String clientType, int id){
+
+    public ClientWorker(Socket connection,Tournament tournament, String clientType, int id){
 
         this.clientConnection = connection;
+        this.tournament = tournament;
         this.clientType = clientType;
         this.id = id;
         this.keepRunningClient = true;
     }
+//    public ClientWorker(Socket connection, String clientType, int id){
+//
+//        this.clientConnection = connection;
+//        this.clientType = clientType;
+//        this.id = id;
+//        this.keepRunningClient = true;
+//        this.adminCounter = 0;
+//        this.userCounter = 0;
+//
+//    }
 
     //--------------------------------------------------
     //                  send message
     //--------------------------------------------------
     private void sendMessage(String message) {
-        displayMessage("SERVER << " + message);
+        displayMessage("SERVER RECEIVED >> " + message);
         this.output.println(message);
     }
 
@@ -50,9 +64,8 @@ public class ClientWorker implements Runnable {
     //                  display message
     //--------------------------------------------------
     private void displayMessage(String message) {
-        System.out.printf("CLIENT[%s %d] >> %s%n", this.clientType,this.id, message);
+        System.out.printf("[%s %d] >> %s%n", this.clientType,this.id, message);
     }
-
 
     //--------------------------------------------------
     //                   get output
@@ -61,14 +74,12 @@ public class ClientWorker implements Runnable {
         this.output = new PrintWriter(clientConnection.getOutputStream(), true);
     }
 
-
     //--------------------------------------------------
     //                   get input
     //--------------------------------------------------
     private void getInputStream(Socket clientConnection) throws IOException {
         this.input = new BufferedReader(new InputStreamReader(clientConnection.getInputStream()));
     }
-
 
     //--------------------------------------------------
     //               close connection
@@ -92,20 +103,18 @@ public class ClientWorker implements Runnable {
         }
     }
 
-
     //--------------------------------------------------
     //             process client request
     //--------------------------------------------------
     private void processClientRequest() throws IOException {
 
         String clientMessage = this.input.readLine(); //recv from client
-        displayMessage("CLIENT SAID >> " + clientMessage);
+        displayMessage("CLIENT REQUEST >> " + clientMessage);
 
         /*  ::: PROTOCOL :::
             determine if clientType = ADMIN or clientType = USER
             specify which actions to execute depending on type
             define functions and assign access
-            //TODO: Set up clientType permissions to allow certain functions
          */
 
         String[] arglist = clientMessage.split("\\|"); // this splits the string using | as delimiter
@@ -218,7 +227,6 @@ public class ClientWorker implements Runnable {
 
     }
 
-
     //--------------------------------------------------
     //               shutdown server
     //--------------------------------------------------
@@ -229,26 +237,39 @@ public class ClientWorker implements Runnable {
         clientConnection.close();
     }
 
-
     //--------------------------------------------------
     //                  run server
     //--------------------------------------------------
     @Override
     public void run() {
-        System.out.println("<status message: running ClientWorker...\n");
+        System.out.println("<status message: running ClientWorker...>");
         BufferedReader input;
         PrintWriter output;
         String newMessage;
 
-        displayMessage("Getting Data Streams");
+//        if (clientType.equalsIgnoreCase("A")){
+//            AdminApp temp = new AdminApp();
+//            adminApps.add(temp);
+//            adminCounter++;
+//            launch(temp.getClass());
+//        }
+//        else if (clientType.equalsIgnoreCase("U")) {
+//            UserApp temp = new UserApp();
+//            userApps.add(temp);
+//            userCounter++;
+//        }
+
+        displayMessage("Getting data streams...");
         try {
             getOutputStream(clientConnection);
             getInputStream(clientConnection);
 
             // Now we process the requests and send the responses
-            sendMessage("Connected to simple Java Server");
+            displayMessage("Connected to simple Java Server");
+
 
             while (this.keepRunningClient) {
+
                 processClientRequest();
             }
         }

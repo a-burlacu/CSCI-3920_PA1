@@ -156,7 +156,7 @@ public class Controller {
                         alert.show();
                         break;
                     case "ERR":
-                        alert = new Alert(Alert.AlertType.ERROR, "Error occured", ButtonType.OK);
+                        alert = new Alert(Alert.AlertType.ERROR, "Error occurred", ButtonType.OK);
                         alert.show();
                         break;
                 }
