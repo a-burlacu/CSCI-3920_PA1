@@ -112,8 +112,6 @@ public class ClientWorker implements Runnable {
         String response = ""; // This will be the response to the server
 
         try {
-            switch(this.clientType) {
-                case "A", "a", "ADMIN", "Admin", "admin":
                     switch (arglist[0]) {
                         case "0":       // TEST CASE
                             System.out.println("selected case 0");
@@ -138,7 +136,7 @@ public class ClientWorker implements Runnable {
                             LocalDate endDate = LocalDate.of(Integer.parseInt(end[0]), Integer.parseInt(end[1]), Integer.parseInt(end[2]));
 
                             // not sure if this should be 'this.tournament' or just 'tournament' since it was never initialized in constructor
-                            this.tournament = new Tournament(arglist[1], startDate, endDate);
+                            tournament = new Tournament(arglist[1], startDate, endDate);
                             response = "OK";
                             break;
 
@@ -191,33 +189,27 @@ public class ClientWorker implements Runnable {
                             response = "OK";
                             break;
 
-                }
-
-                case "U", "u", "USER", "User", "user":
-                    switch (arglist[0]) {
-
-                        case "1":        //get a list of the upcoming matches
-                            response = "OK|" + tournament.getUpcomingMatches();
+                        case "12":        //get a list of the upcoming matches
+                            response = tournament.getUpcomingMatches().toString();
                             break;
 
-                        case "2":        //get a list of matches on a particular date
-                            String[] matchDate = arglist[1].split("-"); //"YYYY","MM,"DD"
-                            LocalDate dateMatch = LocalDate.of(Integer.parseInt(matchDate[0]), Integer.parseInt(matchDate[1]), Integer.parseInt(matchDate[2]));
-                            response = "OK|" + tournament.getMatchesOn(dateMatch);
+                        case "13":        //get a list of matches on a particular date
+                            String[] matchDateU = arglist[1].split("-"); //"YYYY","MM,"DD"
+                            LocalDate dateMatchU = LocalDate.of(Integer.parseInt(matchDateU[0]), Integer.parseInt(matchDateU[1]), Integer.parseInt(matchDateU[2]));
+                            response = tournament.getMatchesOn(dateMatchU).toString();
                             break;
 
 
-                        case "3":        // get a list of all games for a specific team
-                            response = "OK|" + tournament.getMatchesFor(arglist[1]);
+                        case "14":        // get a list of all games for a specific team
+                            response = tournament.getMatchesFor(arglist[1]).toString();
                             break;
 
-                        case "4":        //get the lineups for a match either past or future
-                            String[] lineupDate = arglist[1].split("-"); //"YYYY","MM,"DD"
-                            LocalDate dateLineup = LocalDate.of(Integer.parseInt(lineupDate[0]), Integer.parseInt(lineupDate[1]), Integer.parseInt(lineupDate[2]));
-                            response = "OK|" + tournament.getMatchLineUps(dateLineup);
+                        case "15":        //get the lineups for a match either past or future
+                            String[] lineupDateU = arglist[1].split("-"); //"YYYY","MM,"DD"
+                            LocalDate dateLineupU = LocalDate.of(Integer.parseInt(lineupDateU[0]), Integer.parseInt(lineupDateU[1]), Integer.parseInt(lineupDateU[2]));
+                            response = tournament.getMatchLineUps(dateLineupU).toString();
                             break;
                     }
-            }
 
         }catch (IllegalArgumentException iae) {
             response = "ERR| " + iae.getMessage();

@@ -442,7 +442,7 @@ public class Tournament implements Serializable{
     }
 
     @Override
-    public String toString(){
+    public synchronized String toString(){
         return String.format("\nTournament name: %s \nStart Date: %s \nEnd Date: %s \n",
                 this.name, this.startDate.toString(), this.endDate.toString());
     }

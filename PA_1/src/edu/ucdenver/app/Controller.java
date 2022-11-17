@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Controller {
@@ -428,6 +429,48 @@ public class Controller {
         }
     }
     public void loadFromFile(ActionEvent actionEvent) {
+        this.countries.clear();
+        this.matches.clear();
+        this.players.clear();
+        this.referees.clear();
+
+        String cmd = String.format("%s|%s", "1", "tournament.ser");
+        String response = sendCommand(cmd);
+        String [] responseArgs = response.split("\\|");
+
+        String [] newTournament = responseArgs[1].split(",");
+        String [] listOfCountries = responseArgs[2].split(",");
+        String [] listOfMatches = responseArgs[3].split(",");
+        String [] listOfPlayers = responseArgs[4].split(",");
+        String [] listOfReferees = responseArgs[5].split(",");
+
+        this.countries.addAll(Arrays.asList(listOfCountries));
+
+        for(String s : listOfMatches){
+            String[] date = s.split("-");
+            LocalDate localDate = LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]));
+            this.matches.add(localDate);
+        }
+
+        this.players.addAll(Arrays.asList(listOfPlayers));
+
+        this.referees.addAll(Arrays.asList(listOfReferees));
+
+        cmd = String.format("%s|%s|%s|%s","3", newTournament[1], newTournament[2], newTournament[3]);
+        response = sendCommand(cmd);
+        String[] respArgs = response.split("\\|");
+        Alert alert;
+
+        switch (respArgs[0]){
+            case "OK":
+                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
+                alert.show();
+                break;
+            case "ERR":
+                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
+                alert.show();
+                break;
+        }
     }
     public void saveToFile(ActionEvent actionEvent) {
         String cmd = String.format("%s|%s", "1", "tournament.ser");
@@ -457,25 +500,15 @@ public class Controller {
 
     public void listUpcomingMatches(Event event) {
         if(this.tabUpcomingMatches.isSelected()){
-            String cmd = String.format("%s|","1");
+            String cmd = String.format("%s|","12");
             String response = sendCommand(cmd);
-            List<String> test = new ArrayList<>();
-            test.add("test");
-            this.lstUpcomingMatches.setItems(FXCollections.observableArrayList(test));
+            String [] responseArgs = response.split(",");
+            List<String> upcomingMatches = new ArrayList<>();
 
-            String[] respArgs = response.split("\\|");
-            Alert alert;
-
-            switch (respArgs[0]) {
-                case "OK":
-                    alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
-                    alert.show();
-                    break;
-                case "ERR":
-                    alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
-                    alert.show();
-                    break;
+            for (String s : responseArgs){
+                upcomingMatches.add(s);
             }
+            this.lstUpcomingMatches.setItems(FXCollections.observableArrayList(upcomingMatches));
         }
     }
     public void updateMatchesByDateSelectors(Event event) {
@@ -487,25 +520,15 @@ public class Controller {
     public void listMatchesByDate(ActionEvent actionEvent) {
         this.selMatchByDate.setItems(FXCollections.observableArrayList(this.matches));
         String matchDate = selMatchByDate.getValue().toString();
-        String cmd = String.format("%s|%s","2", matchDate);
+        String cmd = String.format("%s|%s","13", matchDate);
         String response = sendCommand(cmd);
+        String [] responseArgs = response.split(",");
         List<String> test = new ArrayList<>();
-        test.add("test");
-        this.lstMatchesByDate.setItems(FXCollections.observableArrayList(test));
 
-        String[] respArgs = response.split("\\|");
-        Alert alert;
-
-        switch (respArgs[0]) {
-            case "OK":
-                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
-                alert.show();
-                break;
-            case "ERR":
-                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
-                alert.show();
-                break;
+        for (String s : responseArgs) {
+            test.add(s);
         }
+        this.lstMatchesByDate.setItems(FXCollections.observableArrayList(test));
     }
     public void updateMatchesByTeamSelectors(Event event) {
         if(this.tabMatchesByTeam.isSelected()){
@@ -515,25 +538,16 @@ public class Controller {
     public void listMatchesByTeam(ActionEvent actionEvent) {
         this.selMatchesByTeam.setItems(FXCollections.observableArrayList(this.teams));
         String matchTeam = selMatchesByTeam.getValue().toString();
-        String cmd = String.format("%s|%s","3", matchTeam);
+        String cmd = String.format("%s|%s","14", matchTeam);
         String response = sendCommand(cmd);
+        String [] responseArgs = response.split(",");
         List<String> test = new ArrayList<>();
-        test.add("test");
-        this.lstMatchesByTeam.setItems(FXCollections.observableArrayList(test));
 
-        String[] respArgs = response.split("\\|");
-        Alert alert;
-
-        switch (respArgs[0]) {
-            case "OK":
-                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
-                alert.show();
-                break;
-            case "ERR":
-                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
-                alert.show();
-                break;
+        for(String s : responseArgs) {
+            test.add(s);
         }
+
+        this.lstMatchesByTeam.setItems(FXCollections.observableArrayList(test));
     }
     public void updateLineUpsByMatchSelectors(Event event) {
         if(this.tabLineUpsByMatch.isSelected()){
@@ -543,25 +557,16 @@ public class Controller {
     public void listLineUpsByMatch(ActionEvent actionEvent) {
         this.selLineUpsByMatch.setItems(FXCollections.observableArrayList(this.matches));
         String matchDate = selLineUpsByMatch.getValue().toString();
-        String cmd = String.format("%s|%s", "3", matchDate);
+        String cmd = String.format("%s|%s", "15", matchDate);
         String response = sendCommand(cmd);
+        String [] responseArgs = response.split(",");
         List<String> test = new ArrayList<>();
-        test.add("test");
-        this.lstLineUpsByMatch.setItems(FXCollections.observableArrayList(test));
 
-        String[] respArgs = response.split("\\|");
-        Alert alert;
-
-        switch (respArgs[0]) {
-            case "OK":
-                alert = new Alert(Alert.AlertType.CONFIRMATION, "Server Response:" + response, ButtonType.OK);
-                alert.show();
-                break;
-            case "ERR":
-                alert = new Alert(Alert.AlertType.ERROR, respArgs[1], ButtonType.OK);
-                alert.show();
-                break;
+        for(String s : responseArgs){
+            test.add(s);
         }
+
+        this.lstLineUpsByMatch.setItems(FXCollections.observableArrayList(test));
     }
 
     public void exitUserApp(ActionEvent actionEvent) {
