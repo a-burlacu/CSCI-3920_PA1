@@ -16,7 +16,7 @@ general public to query the lineups and matches’ results.
 ## INSTRUCTIONS:
     1) Run `ServerApplication`
     2) Select ADMIN or USER from menu
-    3) Start server 
+    3) Select Start server from menu (option 0)
     4) Run `AdminApp` or `UserApp` depending on which client you choose
 ## Requirements
 ### 1. Load from file
