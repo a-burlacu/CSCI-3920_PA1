@@ -2,6 +2,7 @@ package edu.ucdenver.app;
 
 import edu.ucdenver.server.Server;
 import edu.ucdenver.tournament.Tournament;
+import javafx.application.Platform;
 
 import java.util.Scanner;
 
@@ -55,13 +56,11 @@ public class ServerApplication {
                         //--------------------------------------------------
                         case "0":
                             try {
-                                server = new Server(9888, 10, type, tournament);
-//                                server = new Server(9888, 10, type);
+//                                server = new Server(9888, 10, type, tournament);
+                                server = new Server(9888, 10, type);
 
                                 server.runServer();
 
-                                // this calls the AdminApp start method
-//                                    launch(AdminApp.class, args);
 
 
                             } catch (Exception e) {
@@ -87,8 +86,8 @@ public class ServerApplication {
                         case "2":
                             try {
                                 Tournament.loadFromFile("tournament.ser");
-                                server = new Server(9888, 10, type, tournament);
-                                //server = new Server(9888, 10, type);
+//                                server = new Server(9888, 10, type, tournament);
+                                server = new Server(9888, 10, type);
                                 System.out.println("\n<status message: loaded previous state>\n");
                             } catch (Exception e) {
                                 System.err.print(e);
@@ -139,8 +138,8 @@ public class ServerApplication {
                         //--------------------------------------------------
                         case "0":
                             try {
-                                server = new Server(9888, 10, type, tournament);
-//                                server = new Server(9888, 10, type);
+//                                server = new Server(9888, 10, type, tournament);
+                                server = new Server(9888, 10, type);
 
                                 server.runServer();
 

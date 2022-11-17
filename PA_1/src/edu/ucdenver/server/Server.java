@@ -5,6 +5,7 @@ import edu.ucdenver.app.Controller;
 import edu.ucdenver.app.UserApp;
 import edu.ucdenver.tournament.Tournament;
 import javafx.application.Application;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,7 +16,7 @@ import java.util.concurrent.Executors;
 
 import static javafx.application.Application.launch;
 
-public class Server {
+public class Server  {
 
     private final int port;
     private final int backlog; // how many clients can wait until they get connected
@@ -24,30 +25,34 @@ public class Server {
 
     private ServerSocket serverSocket;
 
-    private Tournament tournament;
+//    private Tournament tournament;
 
     //--------------------------------------------------
     //                  constructors
     //--------------------------------------------------
 
-    public Server(int port, int backlog, String clientType, Tournament tournament) {
-        this.port = port;
-        this.backlog = backlog;
-        this.connectionCounter = 0;
-        this.clientType = clientType;
-        this.tournament = tournament;
-
-    }
-//    public Server(int port, int backlog, String clientType) {
+//    public Server(int port, int backlog, String clientType, Tournament tournament) {
 //        this.port = port;
 //        this.backlog = backlog;
 //        this.connectionCounter = 0;
 //        this.clientType = clientType;
+//        this.tournament = tournament;
 //
-    public Server() {
-        this(9888, 10, "ADMIN", new Tournament(null,null,null ));
+//    }
+    public Server(int port, int backlog, String clientType) {
+        this.port = port;
+        this.backlog = backlog;
+        this.connectionCounter = 0;
+        this.clientType = clientType;
     }
 
+//    public Server() {
+//        this(9888, 10, "ADMIN", new Tournament(null,null,null ));
+//    }
+
+    public Server() {
+        this(9888, 10, "ADMIN");
+    }
 
     //--------------------------------------------------
     //              wait for connection
@@ -75,14 +80,15 @@ public class Server {
             this.serverSocket = new ServerSocket(this.port, this.backlog);
             System.out.println("<status message: server socket created>");
 
-            launch(AdminApp.class);
+//            launch(AdminApp.class);
 
             while (true) {
 
                 try {
                     Socket clientConnection = this.waitForClientConnection();
 
-                    ClientWorker cw = new ClientWorker(clientConnection, tournament,  clientType, connectionCounter);
+//                    ClientWorker cw = new ClientWorker(clientConnection, tournament,  clientType, connectionCounter);
+                    ClientWorker cw = new ClientWorker(clientConnection, clientType, connectionCounter);
                     System.out.println("<status message: ClientWorker object created>");
                     executorService.execute(cw);
 
